@@ -1,2 +1,2 @@
-# PhantomUnityBridge
-Library for connect Phantom wallet to Unity
+# Phantom Unity Bridge
+Library to connect Phantom wallet with Unity
