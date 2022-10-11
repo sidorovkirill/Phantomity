@@ -10,5 +10,6 @@ namespace Phantom.Infrastructure
 		Task<string> SignMessage(string message);
 		Task<string> SignAndSendTransaction(byte[] transaction, SendOptions sendOptions = null);
 		Task<string> SignTransaction(byte[] transaction);
+		Task<string> SignAllTransaction(byte[][] transactions);
 	}
 }

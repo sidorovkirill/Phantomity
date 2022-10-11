@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Phantom
 {
 	public static class Cryptography
@@ -5,6 +7,14 @@ namespace Phantom
 		public static string Encode(byte[] content)
 		{
 			return Base58Encoding.Encode(content);
+		}
+		
+		public static IEnumerable<string> Encode(byte[][] transactions)
+		{
+			foreach (var transaction in transactions)
+			{
+				yield return Encode(transaction);
+			}
 		}
 
 		public static byte[] Decode(string content)

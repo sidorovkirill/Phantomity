@@ -50,13 +50,15 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\ConfigurableLink.cs" />
      <Compile Include="Assets\Scripts\Constants\Cluster.cs" />
      <Compile Include="Assets\Scripts\Constants\Commitments.cs" />
      <Compile Include="Assets\Scripts\Constants\PayloadParams.cs" />
+     <Compile Include="Assets\Scripts\Constants\PhantomMethods.cs" />
      <Compile Include="Assets\Scripts\Constants\QueryParams.cs" />
-     <Compile Include="Assets\Scripts\Constants\Requests.cs" />
      <Compile Include="Assets\Scripts\Constants\UrlRegexVariables.cs" />
      <Compile Include="Assets\Scripts\DTO\DeepLinkData.cs" />
+     <Compile Include="Assets\Scripts\DTO\LinkConfig.cs" />
      <Compile Include="Assets\Scripts\DTO\PhantomConnectDTO.cs" />
      <Compile Include="Assets\Scripts\DTO\SendOptions.cs" />
      <Compile Include="Assets\Scripts\DeepLinkProtocol.cs" />
@@ -66,7 +68,7 @@
      <Compile Include="Assets\Scripts\PhantomBridgeVault.cs" />
      <Compile Include="Assets\Scripts\Utils\Base58Encoding.cs" />
      <Compile Include="Assets\Scripts\Utils\Cryptography.cs" />
-     <Compile Include="Assets\Scripts\Utils\UrlRegex.cs" />
+     <Compile Include="Assets\Scripts\Utils\UrlParser.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/Users/kirill/RiderProjects/PhantomUnityBridge/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

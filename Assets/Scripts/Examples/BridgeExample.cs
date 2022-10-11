@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using DTO;
 using Phantom;
 using Phantom.Infrastructure;
 using UnityEngine;
@@ -8,36 +10,53 @@ namespace DefaultNamespace
 {
 	public class BridgeExample : MonoBehaviour
 	{
-		private IPhantomBridge _phantomBridge;
-
 		private void Awake()
 		{
-			_phantomBridge = new PhantomBridge();
+			
 		}
 
 		private void Start()
 		{
-			Initialize().ConfigureAwait(false);
+			SignWithDeepLink().ConfigureAwait(false);
+			// SignWithUniversalLink().ConfigureAwait(false);
 		}
 
-		private async Task Initialize()
+		private async Task SignWithDeepLink()
 		{
-			var address = await _phantomBridge.Connect();
+			var phantomBridge = new PhantomBridge();
+			await SignMessage(phantomBridge);
+		}
+
+		private async Task SignWithUniversalLink()
+		{
+			var linkConfig = new LinkConfig
+			{
+				Scheme = "unitydl",
+				Domain = "www.ankr.com",
+				PathPrefix = "phantom",
+				RedefinedMethods = new Dictionary<string, string>
+				{
+					{PhantomMethods.Connect, "onPhantomConnected"},
+					{PhantomMethods.SignMessage, "onMessageSigned"}
+				}
+			};
+			var phantomBridge = new PhantomBridge(linkConfig, "https://www.ankr.com/");
+			await SignMessage(phantomBridge);
+		}
+
+		private async Task SignMessage(IPhantomBridge phantomBridge)
+		{
+			var address = await phantomBridge.Connect();
 			Debug.Log("address = " + address);
 			try
 			{
-				var signature = await _phantomBridge.SignMessage("HelloWorld");
+				var signature = await phantomBridge.SignMessage("HelloWorld");
 				Debug.Log("signature = " + signature);
 			}
 			catch (Exception e)
 			{
 				Debug.LogException(e);
 			}
-		}
-
-		private async Task OnDestroy()
-		{
-			await _phantomBridge.Disconnect();
 		}
 	}
 }

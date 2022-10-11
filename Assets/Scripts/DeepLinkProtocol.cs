@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using DTO;
 using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Phantom
 {
-    public class DeepLinkProtocol
+    public class DeepLinkProtocol : ConfigurableLink
     {
         private readonly Dictionary<string, TaskCompletionSource<DeepLinkData>> _requests;
         private readonly string _targetUrl = "https://phantom.app/ul/v1";
-        private readonly string _urlRegex = UrlRegex.Build();
 
-        public DeepLinkProtocol()
+        public DeepLinkProtocol(LinkConfig linkConfig = null) : base(linkConfig)
         {
             _requests = new Dictionary<string, TaskCompletionSource<DeepLinkData>>();
             Application.deepLinkActivated += OnResponse;
@@ -27,7 +26,9 @@ namespace Phantom
         public Task<DeepLinkData> Send(DeepLinkData payload)
         {
             var requestCompletionSource = new TaskCompletionSource<DeepLinkData>();
-            _requests.Add(payload.Method, requestCompletionSource);
+            var method = GetMethodName(payload.Method);
+            
+            _requests.Add(method, requestCompletionSource);
 
             var url = Serialize(payload);
             Application.OpenURL(url);
@@ -67,33 +68,22 @@ namespace Phantom
         {
             var res = new DeepLinkData();
 
-            var parsedUrl = ParseUrl(url);
-            var method = parsedUrl[UrlRegexVariables.Action].Value;
-            var queryParams = parsedUrl[UrlRegexVariables.Params].Value;
+            var parsedUrl = new UrlParser(url);
+            var method = parsedUrl.GetMethodName(LinkConfig.PathPrefix);
+            var queryParams = parsedUrl.GetUrlPart(UrlRegexVariables.Params);
 
-            if (string.IsNullOrEmpty(queryParams))
+            if (string.IsNullOrEmpty(method))
             {
                 throw new Exception("Received message doesn't have appropriate method");
             }
             
             res.Method = method;
-            res.Params = ParseQueryParams(queryParams);
-            
-            return res;
-        }
-
-        private GroupCollection ParseUrl(string url)
-        {
-            Regex rx = new Regex(_urlRegex, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            
-            MatchCollection matches = rx.Matches(url);
-            
-            if (matches.Count == 0)
+            if (!string.IsNullOrEmpty(queryParams))
             {
-                throw new Exception("Received message doesn't match to url rules");
+                res.Params = ParseQueryParams(queryParams);
             }
-            
-            return matches[0].Groups;
+
+            return res;
         }
 
         private Dictionary<string, string> ParseQueryParams(string queryParams)
