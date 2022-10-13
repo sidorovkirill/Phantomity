@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DTO;
 using Phantom;
+using Phantom.DTO;
 using Phantom.Infrastructure;
 using UnityEngine;
 
@@ -25,6 +25,7 @@ namespace DefaultNamespace
 		{
 			var phantomBridge = new PhantomBridge();
 			await SignMessage(phantomBridge);
+			phantomBridge.Browse("https://www.ankr.com/");
 		}
 
 		private async Task SignWithUniversalLink()

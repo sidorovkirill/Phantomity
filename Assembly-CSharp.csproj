@@ -52,7 +52,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\ConfigurableLink.cs" />
      <Compile Include="Assets\Scripts\Constants\Cluster.cs" />
-     <Compile Include="Assets\Scripts\Constants\Commitments.cs" />
+     <Compile Include="Assets\Scripts\Constants\Commitment.cs" />
+     <Compile Include="Assets\Scripts\Constants\DisplayMessageTypes.cs" />
      <Compile Include="Assets\Scripts\Constants\PayloadParams.cs" />
      <Compile Include="Assets\Scripts\Constants\PhantomMethods.cs" />
      <Compile Include="Assets\Scripts\Constants\QueryParams.cs" />
@@ -68,6 +69,8 @@
      <Compile Include="Assets\Scripts\PhantomBridgeVault.cs" />
      <Compile Include="Assets\Scripts\Utils\Base58Encoding.cs" />
      <Compile Include="Assets\Scripts\Utils\Cryptography.cs" />
+     <Compile Include="Assets\Scripts\Utils\PhantomErrorCode.cs" />
+     <Compile Include="Assets\Scripts\Utils\PhantomException.cs" />
      <Compile Include="Assets\Scripts\Utils\UrlParser.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/Users/kirill/RiderProjects/PhantomUnityBridge/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

@@ -1,4 +1,4 @@
-using DTO;
+using Phantom.DTO;
 
 namespace Phantom
 {

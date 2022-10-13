@@ -1,19 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DTO;
 using Newtonsoft.Json;
+using Phantom.DTO;
 using UnityEngine;
 
 namespace Phantom
 {
     public class DeepLinkProtocol : ConfigurableLink
     {
+        private const string DefaultTargetUrl = "https://phantom.app/ul/v1";
+        
         private readonly Dictionary<string, TaskCompletionSource<DeepLinkData>> _requests;
-        private readonly string _targetUrl = "https://phantom.app/ul/v1";
+        private readonly string _targetUrl;
 
-        public DeepLinkProtocol(LinkConfig linkConfig = null) : base(linkConfig)
+        public DeepLinkProtocol(string targetUrl = DefaultTargetUrl, LinkConfig linkConfig = null) : base(linkConfig)
         {
+            _targetUrl = targetUrl;
             _requests = new Dictionary<string, TaskCompletionSource<DeepLinkData>>();
             Application.deepLinkActivated += OnResponse;
         }

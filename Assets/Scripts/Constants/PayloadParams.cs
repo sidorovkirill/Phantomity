@@ -7,5 +7,6 @@ namespace Phantom
 		public const string Session = "session";
 		public const string Message = "message";
 		public const string SendOptions = "sendOptions";
+		public const string Display = "display";
 	}
 }

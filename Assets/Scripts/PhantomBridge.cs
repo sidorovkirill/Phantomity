@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
-using DTO;
 using Newtonsoft.Json;
 using Phantom.DTO;
 using Phantom.Infrastructure;
+using UnityEngine;
 
 namespace Phantom
 {
 	public class PhantomBridge : ConfigurableLink, IPhantomBridge
 	{
+		private const string DefaultPhantomUrl = "https://phantom.app/ul";
 		private const string DefaultAppUrl = "https://unity.com";
 		private const string DefaultLinkScheme = "unitydl";
 
+		private readonly string _providerUrl = $"{DefaultPhantomUrl}/v1";
+		private readonly string _browseUrl = $"{DefaultPhantomUrl}/browse";
 		private readonly string _appUrl = DefaultAppUrl;
 		private readonly string _cluster = Cluster.Devnet;
 
@@ -35,26 +38,49 @@ namespace Phantom
 			};
 		}
 		
+		/// <summary>
+		/// Constructor for test purposes.
+		/// </summary>
 		public PhantomBridge() : base(CreateLinkConfig())
 		{
-			_protocol = new DeepLinkProtocol(LinkConfig);
+			_protocol = new DeepLinkProtocol(_providerUrl, LinkConfig);
 		}
 
+		/// <summary>
+		/// Constructor for applications that uses deeplink technology. 
+		/// </summary>
+		/// <param name="linkScheme">A URL scheme that specifies a link structure that your application reacts to.</param>
+		/// <param name="appUrl">A url used to fetch app metadata (i.e. title, icon)</param>
+		/// <param name="cluster">The network that should be used for subsequent interactions. Please use values from <see cref="Cluster"/></param>
+		/// <param name="redefinedMethods">Allow to redefine callback methods names.</param>
 		public PhantomBridge(string linkScheme, string appUrl, string cluster = Cluster.Devnet, Dictionary<string, string> redefinedMethods = null) :
 			base(CreateLinkConfig(linkScheme, redefinedMethods))
 		{
 			_appUrl = appUrl;
 			_cluster = cluster;
-			_protocol = new DeepLinkProtocol(LinkConfig);
+			_protocol = new DeepLinkProtocol(_providerUrl, LinkConfig);
 		}
 		
+		/// <summary>
+		/// Constructor for applications that uses universal link technology. 
+		/// </summary>
+		/// <param name="linkConfig">Configuration of redirect link.</param>
+		/// <param name="appUrl">A url used to fetch app metadata (i.e. title, icon)</param>
+		/// <param name="cluster">The network that should be used for subsequent interactions. Please use values from <see cref="Cluster"/></param>
 		public PhantomBridge(LinkConfig linkConfig, string appUrl, string cluster = Cluster.Devnet) : base(linkConfig)
 		{
-			_protocol = new DeepLinkProtocol(linkConfig);
+			_protocol = new DeepLinkProtocol(_providerUrl, linkConfig);
 			_appUrl = appUrl;
 			_cluster = cluster;
 		}
 
+		/// <summary>
+		/// Establish a connection with the Phantom wallet.
+		/// </summary>
+		/// <returns>Returns a task that holds public key of the user.</returns>
+		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
+		/// <exception cref="InvalidOperationException">Throws exception when Phantom already connected.</exception>
+		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/connect">Connect</seealso>
 		public async Task<string> Connect()
 		{
 			if (IsConnected)
@@ -81,6 +107,16 @@ namespace Phantom
 			return HandleConnect(response);
 		}
 
+		/// <summary>
+		/// Disconnect from Phantom wallet.
+		/// <remarks>
+		/// Once disconnected, Phantom will reject all signature requests until another connection is established.
+		/// </remarks>
+		/// </summary>
+		/// <returns>Returns a task that holds the asynchronous operation.</returns>
+		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
+		/// <exception cref="InvalidOperationException">Throws exception when Phantom didn't connect and auto connect wasn't activate.</exception>
+		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/disconnect"/>
 		public async Task Disconnect()
 		{
 			if (!IsConnected)
@@ -102,7 +138,16 @@ namespace Phantom
 			HandleDisconnect();
 		}
 
-		public async Task<string> SignMessage(string message)
+		/// <summary>
+		/// Sign given message with a user private key.
+		/// </summary>
+		/// <param name="message">The message that should be signed by the user. Phantom will display this message to the user when they are prompted to sign.</param>
+		/// <param name="display">How message should display to the user. Defaults to utf8. Please use for this values from <see cref="DisplayMessageTypes"/></param>
+		/// <returns>Returns a task that holds the message signature, encoded in base58.</returns>
+		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
+		/// <exception cref="InvalidOperationException">Throws exception when Phantom didn't connect and auto connect wasn't activate.</exception>
+		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/signmessage"/>
+		public async Task<string> SignMessage(string message, string display = null)
 		{
 			await CheckConnection();
 			
@@ -111,6 +156,11 @@ namespace Phantom
 				{ PayloadParams.Session, _connectData.Session },
 				{ PayloadParams.Message, Cryptography.Encode(System.Text.Encoding.UTF8.GetBytes(message)) }
 			};
+			if (display != null)
+			{
+				payload.Add(PayloadParams.Display, display);
+			}
+			
 			var data = PrepareRequestData(PhantomMethods.SignMessage, payload);
 			var response = await _protocol.Send(data);
 			
@@ -119,7 +169,77 @@ namespace Phantom
 			
 			return respPayload[PayloadParams.Signature];
 		}
+		
+		/// <summary>
+		/// Sign given transaction with a user private key.
+		/// <remarks>
+		/// The easiest and most recommended way to send a transaction is via <see cref="SignAndSendTransaction"/>.
+		/// </remarks>
+		/// </summary>
+		/// <param name="transaction">Serialized transaction that Phantom will sign.</param>
+		/// <returns>Returns a task that holds the transaction signature, encoded in base58.</returns>
+		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
+		/// <exception cref="InvalidOperationException">Throws exception when Phantom didn't connect and auto connect wasn't activate.</exception>
+		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/signtransaction"/>
+		public async Task<string> SignTransaction(byte[] transaction)
+		{
+			await CheckConnection();
 
+			var payload = new Dictionary<string, string>
+			{
+				{ PayloadParams.Session, _connectData.Session },
+				{ PayloadParams.Transaction, Cryptography.Encode(transaction) }
+			};
+
+			var data = PrepareRequestData(PhantomMethods.SignTx, payload);
+
+			var response = await _protocol.Send(data);
+
+			CheckForError(response);
+
+			var respPayload = DecryptPayload<Dictionary<string, string>>(response);
+
+			return respPayload[PayloadParams.Transaction];
+		}
+		
+		/// <summary>
+		/// Sign multiple transactions with a user private key.
+		/// </summary>
+		/// <param name="transactions">An array of serialized transactions that Phantom will sign.</param>
+		/// <returns>Returns a task that holds an array of transaction signatures, encoded in base58.</returns>
+		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
+		/// <exception cref="InvalidOperationException">Throws exception when Phantom didn't connect and auto connect wasn't activate.</exception>
+		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/signalltransactions"/>
+		public async Task<string> SignAllTransaction(byte[][] transactions)
+		{
+			await CheckConnection();
+
+			var payload = new Dictionary<string, string>
+			{
+				{ PayloadParams.Session, _connectData.Session },
+				{ PayloadParams.Transaction, JsonConvert.SerializeObject(Cryptography.Encode(transactions).ToArray()) }
+			};
+
+			var data = PrepareRequestData(PhantomMethods.SignAllTx, payload);
+
+			var response = await _protocol.Send(data);
+
+			CheckForError(response);
+
+			var respPayload = DecryptPayload<Dictionary<string, string>>(response);
+
+			return respPayload[PayloadParams.Transaction];
+		}
+
+		/// <summary>
+		/// Prompt the user for permission to  send transactions on their behalf.
+		/// </summary>
+		/// <param name="transaction">Serialized transaction that Phantom will sign.</param>
+		/// <param name="sendOptions">An optional <see cref="SendOptions">object</see> that specifies options for how Phantom should submit the transaction.</param>
+		/// <returns>Returns a task that holds the first signature in the transaction, which can be used as its transaction id.</returns>
+		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
+		/// <exception cref="InvalidOperationException">Throws exception when Phantom didn't connect and auto connect wasn't activate.</exception>
+		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/signandsendtransaction"/>
 		public async Task<string> SignAndSendTransaction(byte[] transaction, SendOptions sendOptions = null)
 		{
 			await CheckConnection();
@@ -146,46 +266,15 @@ namespace Phantom
 			return respPayload[PayloadParams.Signature];
 		}
 
-		public async Task<string> SignTransaction(byte[] transaction)
+		/// <summary>
+		/// Open a page directly within Phantom’s in-app browser.
+		/// </summary>
+		/// <param name="url">The URL that should open within Phantom's in-app browser.</param>
+		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/other-methods/browse"/>
+		public void Browse(string url)
 		{
-			await CheckConnection();
-
-			var payload = new Dictionary<string, string>
-			{
-				{ PayloadParams.Session, _connectData.Session },
-				{ PayloadParams.Transaction, Cryptography.Encode(transaction) }
-			};
-
-			var data = PrepareRequestData(PhantomMethods.SignTx, payload);
-
-			var response = await _protocol.Send(data);
-
-			CheckForError(response);
-
-			var respPayload = DecryptPayload<Dictionary<string, string>>(response);
-
-			return respPayload[PayloadParams.Transaction];
-		}
-		
-		public async Task<string> SignAllTransaction(byte[][] transactions)
-		{
-			await CheckConnection();
-
-			var payload = new Dictionary<string, string>
-			{
-				{ PayloadParams.Session, _connectData.Session },
-				{ PayloadParams.Transaction, JsonConvert.SerializeObject(Cryptography.Encode(transactions).ToArray()) }
-			};
-
-			var data = PrepareRequestData(PhantomMethods.SignAllTx, payload);
-
-			var response = await _protocol.Send(data);
-
-			CheckForError(response);
-
-			var respPayload = DecryptPayload<Dictionary<string, string>>(response);
-
-			return respPayload[PayloadParams.Transaction];
+			var browseUrl = $"{_browseUrl}/{Encode(url)}?ref={Encode(_appUrl)}";
+			Application.OpenURL(browseUrl);
 		}
 
 		private DeepLinkData PrepareRequestData(string method, Dictionary<string, string> payload)
@@ -258,8 +347,9 @@ namespace Phantom
 		{
 			if (data.Params.ContainsKey(QueryParams.ErrorCode))
 			{
-				throw new Exception(
-					$"Error {data.Params[QueryParams.ErrorCode]}: {data.Params[QueryParams.ErrorMessage]}");
+				var code = int.Parse(data.Params[QueryParams.ErrorCode]);
+				var message = data.Params[QueryParams.ErrorMessage];
+				throw new PhantomException((PhantomErrorCode)code, message);
 			}
 		}
 	}

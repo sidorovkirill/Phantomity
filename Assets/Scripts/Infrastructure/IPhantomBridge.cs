@@ -7,7 +7,7 @@ namespace Phantom.Infrastructure
 	{
 		Task<string> Connect();
 		Task Disconnect();
-		Task<string> SignMessage(string message);
+		Task<string> SignMessage(string message, string display = null);
 		Task<string> SignAndSendTransaction(byte[] transaction, SendOptions sendOptions = null);
 		Task<string> SignTransaction(byte[] transaction);
 		Task<string> SignAllTransaction(byte[][] transactions);
