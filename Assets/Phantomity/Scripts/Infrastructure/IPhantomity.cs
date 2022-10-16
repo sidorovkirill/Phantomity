@@ -12,5 +12,6 @@ namespace Phantomity.Infrastructure
 		UniTask<string> SignAndSendTransaction(byte[] transaction, SendOptions sendOptions = null);
 		UniTask<string> SignTransaction(byte[] transaction);
 		UniTask<string> SignAllTransaction(byte[][] transactions);
+		void Browse(string url);
 	}
 }

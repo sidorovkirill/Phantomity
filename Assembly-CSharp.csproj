@@ -74,7 +74,7 @@
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Array8.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Sha512Internal.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\fe_sq.cs" />
-     <Compile Include="Assets\Phantomity\Scripts\Examples\BridgeExample.cs" />
+     <Compile Include="Assets\Phantomity\Scripts\Examples\PhantomityExample.cs" />
      <Compile Include="Assets\Phantomity\Scripts\DTO\DeepLinkData.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\fe_isnonzero.cs" />
      <Compile Include="Assets\Phantomity\Scripts\DeepLinkProtocol.cs" />
