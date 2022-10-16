@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Phantom.DTO;
+using Phantomity.Constants;
+using Phantomity.DTO;
+using Phantomity.Utils;
 using UnityEngine;
 
-namespace Phantom
+namespace Phantomity
 {
     public class DeepLinkProtocol : ConfigurableLink
     {

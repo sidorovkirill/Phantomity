@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Phantom
+namespace Phantomity.Utils
 {
 	[Serializable]
 	public class PhantomException : InvalidOperationException, ISerializable

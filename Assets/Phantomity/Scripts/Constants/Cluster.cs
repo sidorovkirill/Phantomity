@@ -1,4 +1,4 @@
-namespace Phantom
+namespace Phantomity.Constants
 {
 	public static class Cluster
 	{

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Phantom.DTO
+namespace Phantomity.DTO
 {
 	public class DeepLinkData
 	{

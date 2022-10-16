@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Phantom.DTO
+namespace Phantomity.DTO
 {
 	/// <summary>
 	/// Object to config universal link for redirect from Phantom<br/>

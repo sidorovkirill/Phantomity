@@ -1,6 +1,6 @@
-using Phantom.DTO;
+using Phantomity.DTO;
 
-namespace Phantom
+namespace Phantomity
 {
 	public class ConfigurableLink
 	{

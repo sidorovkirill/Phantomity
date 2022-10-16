@@ -4,13 +4,15 @@ using System.Linq;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Phantom.DTO;
-using Phantom.Infrastructure;
+using Phantomity.Constants;
+using Phantomity.DTO;
+using Phantomity.Infrastructure;
+using Phantomity.Utils;
 using UnityEngine;
 
-namespace Phantom
+namespace Phantomity
 {
-	public class PhantomBridge : ConfigurableLink, IPhantomBridge
+	public class PhantomityBridge : ConfigurableLink, IPhantomity
 	{
 		private const string DefaultPhantomUrl = "https://phantom.app/ul";
 		private const string DefaultAppUrl = "https://unity.com";
@@ -22,7 +24,7 @@ namespace Phantom
 		private readonly string _cluster = Cluster.Devnet;
 
 		private readonly DeepLinkProtocol _protocol;
-		private readonly PhantomBridgeVault _vault = new PhantomBridgeVault();
+		private readonly PhantomityVault _vault = new PhantomityVault();
 
 		private PhantomConnectDTO _connectData;
 
@@ -41,7 +43,7 @@ namespace Phantom
 		/// <summary>
 		/// Constructor for test purposes.
 		/// </summary>
-		public PhantomBridge() : base(CreateLinkConfig())
+		public PhantomityBridge() : base(CreateLinkConfig())
 		{
 			_protocol = new DeepLinkProtocol(_providerUrl, LinkConfig);
 		}
@@ -53,7 +55,7 @@ namespace Phantom
 		/// <param name="appUrl">A url used to fetch app metadata (i.e. title, icon)</param>
 		/// <param name="cluster">The network that should be used for subsequent interactions. Please use values from <see cref="Cluster"/></param>
 		/// <param name="redefinedMethods">Allow to redefine callback methods names.</param>
-		public PhantomBridge(string linkScheme, string appUrl, string cluster = Cluster.Devnet, Dictionary<string, string> redefinedMethods = null) :
+		public PhantomityBridge(string linkScheme, string appUrl, string cluster = Cluster.Devnet, Dictionary<string, string> redefinedMethods = null) :
 			base(CreateLinkConfig(linkScheme, redefinedMethods))
 		{
 			_appUrl = appUrl;
@@ -67,7 +69,7 @@ namespace Phantom
 		/// <param name="linkConfig">Configuration of redirect link.</param>
 		/// <param name="appUrl">A url used to fetch app metadata (i.e. title, icon)</param>
 		/// <param name="cluster">The network that should be used for subsequent interactions. Please use values from <see cref="Cluster"/></param>
-		public PhantomBridge(LinkConfig linkConfig, string appUrl, string cluster = Cluster.Devnet) : base(linkConfig)
+		public PhantomityBridge(LinkConfig linkConfig, string appUrl, string cluster = Cluster.Devnet) : base(linkConfig)
 		{
 			_protocol = new DeepLinkProtocol(_providerUrl, linkConfig);
 			_appUrl = appUrl;
@@ -279,7 +281,7 @@ namespace Phantom
 
 		private DeepLinkData PrepareRequestData(string method, Dictionary<string, string> payload)
 		{
-			var nonce = PhantomBridgeVault.GetNonce();
+			var nonce = PhantomityVault.GetNonce();
 			var encryptedPayload = _vault.EncryptPayload(payload, nonce);
 
 			return new DeepLinkData

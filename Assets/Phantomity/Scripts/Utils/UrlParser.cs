@@ -1,7 +1,8 @@
 using System;
 using System.Text.RegularExpressions;
+using Phantomity.Constants;
 
-namespace Phantom
+namespace Phantomity.Utils
 {
 	public class UrlParser
 	{

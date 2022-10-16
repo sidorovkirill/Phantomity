@@ -3,7 +3,7 @@ using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
 
-namespace Phantom
+namespace Phantomity.Utils
 {
     // Implements https://en.bitcoin.it/wiki/Base58Check_encoding
     public static class Base58Encoding

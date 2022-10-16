@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Chaos.NaCl;
 using Newtonsoft.Json;
+using Phantomity.Utils;
 
-namespace Phantom
+namespace Phantomity
 {
-	public class PhantomBridgeVault
+	public class PhantomityVault
 	{
 		private byte[] _publicKey;
 		private byte[] _privateKey;
@@ -16,7 +17,7 @@ namespace Phantom
 			get { return Cryptography.Encode(_publicKey); }
 		}
 
-		public PhantomBridgeVault()
+		public PhantomityVault()
 		{
 			GenerateKeypair();
 		}

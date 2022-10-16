@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Phantom;
-using Phantom.DTO;
-using Phantom.Infrastructure;
+using Phantomity.Constants;
+using Phantomity.DTO;
+using Phantomity.Infrastructure;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Phantomity.Examples
 {
 	public class BridgeExample : MonoBehaviour
 	{
@@ -23,7 +23,7 @@ namespace DefaultNamespace
 
 		private async Task SignWithDeepLink()
 		{
-			var phantomBridge = new PhantomBridge();
+			var phantomBridge = new PhantomityBridge();
 			await SignMessage(phantomBridge);
 			phantomBridge.Browse("https://www.ankr.com/");
 		}
@@ -41,11 +41,11 @@ namespace DefaultNamespace
 					{PhantomMethods.SignMessage, "onMessageSigned"}
 				}
 			};
-			var phantomBridge = new PhantomBridge(linkConfig, "https://www.ankr.com/");
+			var phantomBridge = new PhantomityBridge(linkConfig, "https://www.ankr.com/");
 			await SignMessage(phantomBridge);
 		}
 
-		private async Task SignMessage(IPhantomBridge phantomBridge)
+		private async Task SignMessage(IPhantomity phantomBridge)
 		{
 			var address = await phantomBridge.Connect();
 			Debug.Log("address = " + address);

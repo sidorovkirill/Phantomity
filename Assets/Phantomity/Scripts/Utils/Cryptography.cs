@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Phantom
+namespace Phantomity.Utils
 {
 	public static class Cryptography
 	{

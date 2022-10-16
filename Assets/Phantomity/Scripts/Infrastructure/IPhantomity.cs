@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using Phantom.DTO;
+using Phantomity.DTO;
 
-namespace Phantom.Infrastructure
+namespace Phantomity.Infrastructure
 {
-	public interface IPhantomBridge
+	public interface IPhantomity
 	{
 		Task<string> Connect();
 		Task Disconnect();
