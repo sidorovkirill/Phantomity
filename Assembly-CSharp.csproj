@@ -140,6 +140,7 @@
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Salsa\Salsa20.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_p1p1_to_p2.cs" />
      <Compile Include="Assets\Phantomity\Scripts\Utils\Cryptography.cs" />
+     <Compile Include="Assets\Phantomity\Scripts\Examples\DocExamples.cs" />
      <None Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Salsa\replace regex.txt" />
  <Reference Include="UnityEngine">
  <HintPath>/Applications/Unity/Hub/Editor/2020.3.23f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
