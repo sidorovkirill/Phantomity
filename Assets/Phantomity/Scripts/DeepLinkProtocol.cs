@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Phantomity.Constants;
 using Phantomity.DTO;
@@ -28,7 +29,7 @@ namespace Phantomity
             _targetUrl = targetUrl;
         }
 
-        public Task<DeepLinkData> Send(DeepLinkData payload)
+        public async UniTask<DeepLinkData> Send(DeepLinkData payload)
         {
             var requestCompletionSource = new TaskCompletionSource<DeepLinkData>();
             var method = GetMethodName(payload.Method);
@@ -37,15 +38,15 @@ namespace Phantomity
 
             var url = Serialize(payload);
             Application.OpenURL(url);
+
+            var response = await requestCompletionSource.Task;
             
-            return requestCompletionSource.Task;
+            return response;
         }
 
         private void OnResponse(string url)
         {
             var data = Deserialize(url);
-            Debug.Log(JsonConvert.SerializeObject(data));
-            Debug.Log(_requests.Keys.ToString());
             if (_requests.ContainsKey(data.Method))
             {
                 _requests[data.Method].TrySetResult(data);

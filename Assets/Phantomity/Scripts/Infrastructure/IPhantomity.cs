@@ -1,15 +1,16 @@
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Phantomity.DTO;
 
 namespace Phantomity.Infrastructure
 {
 	public interface IPhantomity
 	{
-		Task<string> Connect();
-		Task Disconnect();
-		Task<string> SignMessage(string message, string display = null);
-		Task<string> SignAndSendTransaction(byte[] transaction, SendOptions sendOptions = null);
-		Task<string> SignTransaction(byte[] transaction);
-		Task<string> SignAllTransaction(byte[][] transactions);
+		UniTask<string> Connect();
+		UniTask Disconnect();
+		UniTask<string> SignMessage(string message, string display = null);
+		UniTask<string> SignAndSendTransaction(byte[] transaction, SendOptions sendOptions = null);
+		UniTask<string> SignTransaction(byte[] transaction);
+		UniTask<string> SignAllTransaction(byte[][] transactions);
 	}
 }

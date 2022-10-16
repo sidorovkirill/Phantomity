@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Networking;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Phantomity.Constants;
 using Phantomity.DTO;
@@ -83,7 +83,7 @@ namespace Phantomity
 		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
 		/// <exception cref="InvalidOperationException">Throws exception when Phantom already connected.</exception>
 		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/connect">Connect</seealso>
-		public async Task<string> Connect()
+		public async UniTask<string> Connect()
 		{
 			if (IsConnected)
 			{
@@ -119,7 +119,7 @@ namespace Phantomity
 		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
 		/// <exception cref="InvalidOperationException">Throws exception when Phantom didn't connect and auto connect wasn't activate.</exception>
 		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/disconnect"/>
-		public async Task Disconnect()
+		public async UniTask Disconnect()
 		{
 			if (!IsConnected)
 			{
@@ -149,7 +149,7 @@ namespace Phantomity
 		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
 		/// <exception cref="InvalidOperationException">Throws exception when Phantom didn't connect and auto connect wasn't activate.</exception>
 		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/signmessage"/>
-		public async Task<string> SignMessage(string message, string display = null)
+		public async UniTask<string> SignMessage(string message, string display = null)
 		{
 			await CheckConnection();
 			
@@ -183,7 +183,7 @@ namespace Phantomity
 		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
 		/// <exception cref="InvalidOperationException">Throws exception when Phantom didn't connect and auto connect wasn't activate.</exception>
 		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/signtransaction"/>
-		public async Task<string> SignTransaction(byte[] transaction)
+		public async UniTask<string> SignTransaction(byte[] transaction)
 		{
 			await CheckConnection();
 
@@ -212,7 +212,7 @@ namespace Phantomity
 		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
 		/// <exception cref="InvalidOperationException">Throws exception when Phantom didn't connect and auto connect wasn't activate.</exception>
 		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/signalltransactions"/>
-		public async Task<string> SignAllTransaction(byte[][] transactions)
+		public async UniTask<string> SignAllTransaction(byte[][] transactions)
 		{
 			await CheckConnection();
 
@@ -242,7 +242,7 @@ namespace Phantomity
 		/// <exception cref="PhantomException">Throws exception when Phantom can't handle request.</exception>
 		/// <exception cref="InvalidOperationException">Throws exception when Phantom didn't connect and auto connect wasn't activate.</exception>
 		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/provider-methods/signandsendtransaction"/>
-		public async Task<string> SignAndSendTransaction(byte[] transaction, SendOptions sendOptions = null)
+		public async UniTask<string> SignAndSendTransaction(byte[] transaction, SendOptions sendOptions = null)
 		{
 			await CheckConnection();
 
@@ -275,8 +275,16 @@ namespace Phantomity
 		/// <seealso href="https://docs.phantom.app/integrating/deeplinks-ios-and-android/other-methods/browse"/>
 		public void Browse(string url)
 		{
-			var browseUrl = $"{_browseUrl}/{Encode(url)}?ref={Encode(_appUrl)}";
-			Application.OpenURL(browseUrl);
+			try
+			{
+				var browseUrl = $"{_browseUrl}/{Encode(url)}?ref={Encode(_appUrl)}";
+				Application.OpenURL(browseUrl);
+			}
+			catch (Exception e)
+			{
+				Debug.Log(e.Message);
+				Debug.LogException(e);
+			}
 		}
 
 		private DeepLinkData PrepareRequestData(string method, Dictionary<string, string> payload)
@@ -327,7 +335,7 @@ namespace Phantomity
 			return payload;
 		}
 
-		private async Task CheckConnection()
+		private async UniTask CheckConnection()
 		{
 			if (!AutoConnect && !IsConnected)
 			{

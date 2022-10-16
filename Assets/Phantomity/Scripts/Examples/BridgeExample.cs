@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Phantomity.Constants;
 using Phantomity.DTO;
 using Phantomity.Infrastructure;
@@ -17,18 +18,18 @@ namespace Phantomity.Examples
 
 		private void Start()
 		{
-			SignWithDeepLink().ConfigureAwait(false);
+			SignWithDeepLink().Forget();
 			// SignWithUniversalLink().ConfigureAwait(false);
 		}
 
-		private async Task SignWithDeepLink()
+		private async UniTask SignWithDeepLink()
 		{
 			var phantomBridge = new PhantomityBridge();
 			await SignMessage(phantomBridge);
 			phantomBridge.Browse("https://www.ankr.com/");
 		}
 
-		private async Task SignWithUniversalLink()
+		private async UniTask SignWithUniversalLink()
 		{
 			var linkConfig = new LinkConfig
 			{
@@ -45,7 +46,7 @@ namespace Phantomity.Examples
 			await SignMessage(phantomBridge);
 		}
 
-		private async Task SignMessage(IPhantomity phantomBridge)
+		private async UniTask SignMessage(IPhantomity phantomBridge)
 		{
 			var address = await phantomBridge.Connect();
 			Debug.Log("address = " + address);

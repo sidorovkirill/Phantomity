@@ -806,6 +806,26 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="UniTask.Addressables.csproj">
+      <Project>{62d674fc-309c-6c52-f8b0-e2affe7de398}</Project>
+      <Name>UniTask.Addressables</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.csproj">
+      <Project>{bd0c0bc6-5ba9-e11c-edf0-3712772edfa1}</Project>
+      <Name>UniTask</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.DOTween.csproj">
+      <Project>{1b73b470-ae9c-def5-59ee-cdf64bbe79f7}</Project>
+      <Name>UniTask.DOTween</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.TextMeshPro.csproj">
+      <Project>{582b615f-78f1-aad5-1076-bbe6da639152}</Project>
+      <Name>UniTask.TextMeshPro</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.Linq.csproj">
+      <Project>{6a76d4d9-56ff-0783-764c-2e1d230bd6e2}</Project>
+      <Name>UniTask.Linq</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
