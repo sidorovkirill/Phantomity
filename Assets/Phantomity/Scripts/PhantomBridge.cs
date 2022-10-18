@@ -24,7 +24,7 @@ namespace Phantomity
 		private readonly string _cluster = Cluster.Devnet;
 
 		private readonly DeepLinkProtocol _protocol;
-		private readonly PhantomityVault _vault = new PhantomityVault();
+		private readonly SecretsVault _vault = new SecretsVault();
 
 		private PhantomConnectDTO _connectData;
 
@@ -289,7 +289,7 @@ namespace Phantomity
 
 		private DeepLinkData PrepareRequestData(string method, Dictionary<string, string> payload)
 		{
-			var nonce = PhantomityVault.GetNonce();
+			var nonce = SecretsVault.GetNonce();
 			var encryptedPayload = _vault.EncryptPayload(payload, nonce);
 
 			return new DeepLinkData

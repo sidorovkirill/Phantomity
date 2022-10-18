@@ -69,7 +69,6 @@
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_p3_0.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_p3_dbl.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\fe_mul121666.cs" />
-     <Compile Include="Assets\Phantomity\Scripts\Examples\DocExamples.cs" />
      <Compile Include="Assets\Phantomity\Scripts\Constants\Commitment.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\FieldElement.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Array8.cs" />
@@ -83,7 +82,7 @@
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_p2_dbl.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\fe_tobytes.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_p1p1_to_p3.cs" />
-     <Compile Include="Assets\Phantomity\Scripts\PhantomityVault.cs" />
+     <Compile Include="Assets\Phantomity\Scripts\SecretsVault.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\MontgomeryCurve25519.cs" />
      <Compile Include="Assets\Phantomity\Scripts\Utils\PhantomException.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\fe_frombytes.cs" />
@@ -113,7 +112,7 @@
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\base.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\fe_1.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_precomp_0.cs" />
-     <Compile Include="Assets\Phantomity\Scripts\PhantomityBridge.cs" />
+     <Compile Include="Assets\Phantomity\Scripts\PhantomBridge.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_double_scalarmult.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_tobytes.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\fe_0.cs" />

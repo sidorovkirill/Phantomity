@@ -6,7 +6,7 @@ using Phantomity.Utils;
 
 namespace Phantomity
 {
-	public class PhantomityVault
+	public class SecretsVault
 	{
 		private byte[] _publicKey;
 		private byte[] _privateKey;
@@ -17,7 +17,7 @@ namespace Phantomity
 			get { return Cryptography.Encode(_publicKey); }
 		}
 
-		public PhantomityVault()
+		public SecretsVault()
 		{
 			GenerateKeypair();
 		}

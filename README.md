@@ -161,7 +161,7 @@ var linkConfig = new LinkConfig
 
 ## Error handling
 
-Phantomity can throw [PhantomException](Assets/Phantomity/Scripts/Utils/PhantomException.cs.meta) with Phantom specific [error codes](https://docs.phantom.app/integrating/errors).
+Phantomity can throw [PhantomException](Assets/Phantomity/Scripts/Utils/PhantomException.cs) with Phantom specific [error codes](https://docs.phantom.app/integrating/errors).
 
 ```csharp
 try
