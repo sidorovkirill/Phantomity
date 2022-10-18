@@ -4,7 +4,7 @@ using Phantomity.DTO;
 
 namespace Phantomity.Infrastructure
 {
-	public interface IPhantomity
+	public interface IPhantomBridge
 	{
 		UniTask<string> Connect();
 		UniTask Disconnect();

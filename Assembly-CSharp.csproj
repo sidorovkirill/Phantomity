@@ -54,7 +54,7 @@
   <ItemGroup>
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_p2_0.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\d2.cs" />
-     <Compile Include="Assets\Phantomity\Scripts\Infrastructure\IPhantomity.cs" />
+     <Compile Include="Assets\Phantomity\Scripts\Infrastructure\IPhantomBridge.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Array16.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\fe_sub.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\fe_invert.cs" />
@@ -69,6 +69,7 @@
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_p3_0.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_p3_dbl.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\fe_mul121666.cs" />
+     <Compile Include="Assets\Phantomity\Scripts\Examples\DocExamples.cs" />
      <Compile Include="Assets\Phantomity\Scripts\Constants\Commitment.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\FieldElement.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Array8.cs" />
@@ -140,7 +141,6 @@
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Salsa\Salsa20.cs" />
      <Compile Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Ed25519Ref10\ge_p1p1_to_p2.cs" />
      <Compile Include="Assets\Phantomity\Scripts\Utils\Cryptography.cs" />
-     <Compile Include="Assets\Phantomity\Scripts\Examples\DocExamples.cs" />
      <None Include="Assets\Phantomity\Plugins\Chaos.NaCl\Internal\Salsa\replace regex.txt" />
  <Reference Include="UnityEngine">
  <HintPath>/Applications/Unity/Hub/Editor/2020.3.23f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -807,25 +807,25 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="UniTask.Addressables.csproj">
-      <Project>{62d674fc-309c-6c52-f8b0-e2affe7de398}</Project>
-      <Name>UniTask.Addressables</Name>
-    </ProjectReference>
-    <ProjectReference Include="UniTask.csproj">
-      <Project>{bd0c0bc6-5ba9-e11c-edf0-3712772edfa1}</Project>
-      <Name>UniTask</Name>
-    </ProjectReference>
     <ProjectReference Include="UniTask.DOTween.csproj">
       <Project>{1b73b470-ae9c-def5-59ee-cdf64bbe79f7}</Project>
       <Name>UniTask.DOTween</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.Linq.csproj">
+      <Project>{6a76d4d9-56ff-0783-764c-2e1d230bd6e2}</Project>
+      <Name>UniTask.Linq</Name>
     </ProjectReference>
     <ProjectReference Include="UniTask.TextMeshPro.csproj">
       <Project>{582b615f-78f1-aad5-1076-bbe6da639152}</Project>
       <Name>UniTask.TextMeshPro</Name>
     </ProjectReference>
-    <ProjectReference Include="UniTask.Linq.csproj">
-      <Project>{6a76d4d9-56ff-0783-764c-2e1d230bd6e2}</Project>
-      <Name>UniTask.Linq</Name>
+    <ProjectReference Include="UniTask.csproj">
+      <Project>{bd0c0bc6-5ba9-e11c-edf0-3712772edfa1}</Project>
+      <Name>UniTask</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.Addressables.csproj">
+      <Project>{62d674fc-309c-6c52-f8b0-e2affe7de398}</Project>
+      <Name>UniTask.Addressables</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

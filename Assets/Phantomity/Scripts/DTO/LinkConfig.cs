@@ -8,6 +8,7 @@ namespace Phantomity.DTO
 	/// </summary>
 	public class LinkConfig
 	{
+		private string _pathPrefix;
 		/// <summary>
 		/// Scheme of link
 		/// </summary>
@@ -19,10 +20,15 @@ namespace Phantomity.DTO
 		/// Domain name
 		/// </summary>
 		public string Domain { get; set; }
+
 		/// <value>
 		/// A <see cref="string"/> that represent part of request url precedes the Phantom method name.
 		/// </value>
-		public string PathPrefix { get; set; }
+		public string PathPrefix
+		{
+			get { return _pathPrefix; }
+			set { _pathPrefix = value.Trim('/'); }
+		}
 		/// <summary>
 		/// Allow to redefine callback methods names.<br/>
 		/// By default callback names that uses in redirect link the same as <see cref="PhantomMethods">Phantom provider methods</see>

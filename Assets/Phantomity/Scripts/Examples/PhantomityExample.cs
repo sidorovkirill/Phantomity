@@ -19,7 +19,7 @@ namespace Phantomity.Examples
 		[SerializeField] private Text _userAddress;
 		[SerializeField] private Text _signature;
 		
-		private IPhantomity _phantomity;
+		private IPhantomBridge _phantomity;
 		private string _address;
 
 		public void Connect()
@@ -44,7 +44,7 @@ namespace Phantomity.Examples
 
 		private void Start()
 		{
-			_phantomity = new PhantomityBridge();
+			_phantomity = new PhantomBridge();
 			ToggleConnection(false);
 		}
 
@@ -61,7 +61,7 @@ namespace Phantomity.Examples
 					{ PhantomMethods.SignMessage, "onMessageSigned" }
 				}
 			};
-			var _phantomity = new PhantomityBridge(linkConfig, "https://www.ankr.com/");
+			var _phantomity = new PhantomBridge(linkConfig, "https://www.ankr.com/");
 		}
 
 		private async UniTaskVoid ConnectAsync()

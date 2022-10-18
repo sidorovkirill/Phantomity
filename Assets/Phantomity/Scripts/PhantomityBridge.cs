@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Phantomity
 {
-	public class PhantomityBridge : ConfigurableLink, IPhantomity
+	public class PhantomBridge : ConfigurableLink, IPhantomBridge
 	{
 		private const string DefaultPhantomUrl = "https://phantom.app/ul";
 		private const string DefaultAppUrl = "https://unity.com";
@@ -43,7 +43,7 @@ namespace Phantomity
 		/// <summary>
 		/// Constructor for test purposes.
 		/// </summary>
-		public PhantomityBridge() : base(CreateLinkConfig())
+		public PhantomBridge() : base(CreateLinkConfig())
 		{
 			_protocol = new DeepLinkProtocol(_providerUrl, LinkConfig);
 		}
@@ -55,7 +55,7 @@ namespace Phantomity
 		/// <param name="appUrl">A url used to fetch app metadata (i.e. title, icon)</param>
 		/// <param name="cluster">The network that should be used for subsequent interactions. Please use values from <see cref="Cluster"/></param>
 		/// <param name="redefinedMethods">Allow to redefine callback methods names.</param>
-		public PhantomityBridge(string linkScheme, string appUrl, string cluster = Cluster.Devnet, Dictionary<string, string> redefinedMethods = null) :
+		public PhantomBridge(string linkScheme, string appUrl, string cluster = Cluster.Devnet, Dictionary<string, string> redefinedMethods = null) :
 			base(CreateLinkConfig(linkScheme, redefinedMethods))
 		{
 			_appUrl = appUrl;
@@ -69,7 +69,7 @@ namespace Phantomity
 		/// <param name="linkConfig">Configuration of redirect link.</param>
 		/// <param name="appUrl">A url used to fetch app metadata (i.e. title, icon)</param>
 		/// <param name="cluster">The network that should be used for subsequent interactions. Please use values from <see cref="Cluster"/></param>
-		public PhantomityBridge(LinkConfig linkConfig, string appUrl, string cluster = Cluster.Devnet) : base(linkConfig)
+		public PhantomBridge(LinkConfig linkConfig, string appUrl, string cluster = Cluster.Devnet) : base(linkConfig)
 		{
 			_protocol = new DeepLinkProtocol(_providerUrl, linkConfig);
 			_appUrl = appUrl;
