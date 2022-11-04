@@ -35,13 +35,7 @@ namespace Phantomity.Utils
 		public string GetUrlPart(string partName)
 		{
 			var part = _parsedUrl[partName];
-			
-			if (part == Match.Empty)
-			{
-				throw new Exception($"Received url doesn't have {partName} part");
-			}
-
-			return part.Value;
+			return !String.IsNullOrEmpty(part.Value) ? part.Value : null;
 		}
 
 		public string GetMethodName(string prefix = null)
