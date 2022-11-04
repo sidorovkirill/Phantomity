@@ -289,8 +289,9 @@ namespace Phantomity
 
 		private DeepLinkData PrepareRequestData(string method, Dictionary<string, string> payload)
 		{
+			var payloadStr = JsonConvert.SerializeObject(payload);
 			var nonce = SecretsVault.GetNonce();
-			var encryptedPayload = _vault.EncryptPayload(payload, nonce);
+			var encryptedPayload = _vault.EncryptPayload(payloadStr, nonce);
 
 			return new DeepLinkData
 			{

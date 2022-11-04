@@ -36,10 +36,9 @@ namespace Phantomity
 			return decryptedStr;
 		}
 
-		public string EncryptPayload(Dictionary<string, string> payload, byte[] nonce)
+		public string EncryptPayload(string payload, byte[] nonce)
 		{
-			var payloadStr = JsonConvert.SerializeObject(payload);
-			var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payloadStr);
+			var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
 
 			var encryptedBytes = XSalsa20Poly1305.Encrypt(payloadBytes, _sharedSecret, nonce);
 			return Cryptography.Encode(encryptedBytes);
