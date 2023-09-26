@@ -1,0 +1,20 @@
+{"ActiveWorkflow" : "UnitypackageWorkflow", "FolderWorkflow" : {
+"mainPath" : {
+"path" : null, 
+"guid" : ""
+}, 
+"extraPaths" : [], 
+"dependencies" : false
+}, "UnitypackageWorkflow" : {
+"mainPath" : {
+"path" : "Builds\/Packages\/Phantomity v1.0.0.unitypackage", 
+"guid" : ""
+}, 
+"extraPaths" : []
+}, "HybridPackageWorkflow" : {
+"mainPath" : {
+"path" : null, 
+"guid" : ""
+}, 
+"extraPaths" : []
+}}

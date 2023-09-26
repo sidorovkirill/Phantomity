@@ -15,10 +15,10 @@ namespace Tests
             var url = $"{schema}://{method}?{query}";
             var urlParser = new UrlParser(url);
 
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Scheme) == schema);
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Method) == method);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Scheme), schema);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Method), method);
             Assert.IsNull(urlParser.GetUrlPart(UrlRegexVariables.Domain));
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Params) == query);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Params), query);
             Assert.IsNull(urlParser.GetUrlPart(UrlRegexVariables.Anchor));
         }
         
@@ -30,8 +30,8 @@ namespace Tests
             var url = $"{schema}://{method}";
             var urlParser = new UrlParser(url);
 
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Scheme) == schema);
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Method) == method);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Scheme), schema);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Method), method);
             Assert.IsNull(urlParser.GetUrlPart(UrlRegexVariables.Domain));
             Assert.IsNull(urlParser.GetUrlPart(UrlRegexVariables.Params));
             Assert.IsNull(urlParser.GetUrlPart(UrlRegexVariables.Anchor));
@@ -48,11 +48,11 @@ namespace Tests
             var url = $"{schema}://{route}?{query}";
             var urlParser = new UrlParser(url);
 
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Scheme) == schema);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Scheme), schema);
             Assert.IsNull(urlParser.GetUrlPart(UrlRegexVariables.Domain));
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Method) == route);
-            Assert.IsTrue(urlParser.GetMethodName(prefix) == method);
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Params) == query);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Method), route);
+            Assert.AreEqual(urlParser.GetMethodName(prefix), method);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Params), query);
             Assert.IsNull(urlParser.GetUrlPart(UrlRegexVariables.Anchor));
         }
         
@@ -66,10 +66,10 @@ namespace Tests
             var url = $"{schema}://{domain}/{method}?{query}";
             var urlParser = new UrlParser(url);
 
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Scheme) == schema);
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Domain) == domain);
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Method) == method);
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Params) == query);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Scheme), schema);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Domain), domain);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Method), method);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Params), query);
             Assert.IsNull(urlParser.GetUrlPart(UrlRegexVariables.Anchor));
         }
         
@@ -85,11 +85,11 @@ namespace Tests
             var url = $"{schema}://{domain}/{route}?{query}";
             var urlParser = new UrlParser(url);
 
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Scheme) == schema);
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Domain) == domain);
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Method) == route);
-            Assert.IsTrue(urlParser.GetMethodName(prefix) == method);
-            Assert.IsTrue(urlParser.GetUrlPart(UrlRegexVariables.Params) == query);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Scheme), schema);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Domain), domain);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Method), route);
+            Assert.AreEqual(urlParser.GetMethodName(prefix), method);
+            Assert.AreEqual(urlParser.GetUrlPart(UrlRegexVariables.Params), query);
             Assert.IsNull(urlParser.GetUrlPart(UrlRegexVariables.Anchor));
         }
         

@@ -826,6 +826,10 @@
       <Project>{62d674fc-309c-6c52-f8b0-e2affe7de398}</Project>
       <Name>UniTask.Addressables</Name>
     </ProjectReference>
+    <ProjectReference Include="asset-store-tools-editor.csproj">
+      <Project>{01d0da03-63aa-3476-93fe-02d27f9213c0}</Project>
+      <Name>asset-store-tools-editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -30,7 +30,7 @@ namespace Tests
             var encryptedMessage = _alice.EncryptPayload(originalMessage, nonce);
             var decryptedMessage = _bob.DecryptPayload(encryptedMessage, nonce);
             
-            Assert.IsTrue(originalMessage == decryptedMessage);
+            Assert.AreEqual(originalMessage, decryptedMessage);
         }
     }
 }
